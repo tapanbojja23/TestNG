@@ -47,7 +47,9 @@ public class Elements {
     String checkBoxTab= "//span[text()='Check Box' and @class='text']";
     String expandAll= "//*[@title='Expand all']";
     String collapsAll= "//*[@title='Collapse all']";
-    String checkAllCheckBoxes= "//li[@class='rct-node rct-node-leaf']//span[@class='rct-title']";
+    String checkAllCheckBoxes = "//li[@class='rct-node rct-node-leaf']//span[@class='rct-title']";
+    String checkAllCheckBoxes1 ="//span[@class='rct-title']";
+
     String listCheckAllCheckbox ="//*[@class='rct-node rct-node-parent rct-node-expanded']";
     String DesktopCheckbox= "//span[@class='rct-title' and text()='Desktop']";
     String NotesCheckboxTab= "//span[@class='rct-title' and text()='Notes']";
@@ -117,13 +119,14 @@ public class Elements {
 
 
 
-        List<WebElement> list = driver.findElements(By.xpath(listCheckAllCheckbox));
+        List<WebElement> list = driver.findElements(By.xpath(checkAllCheckBoxes1));
 
         for (WebElement str:list) {
             if(str.getText().equalsIgnoreCase("Notes"))
             {
                 System.out.println("Inside if"+str.getText());
                 str.click();
+
             }
 
 
