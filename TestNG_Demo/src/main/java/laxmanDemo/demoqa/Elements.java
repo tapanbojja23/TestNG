@@ -47,7 +47,8 @@ public class Elements {
     String checkBoxTab= "//span[text()='Check Box' and @class='text']";
     String expandAll= "//*[@title='Expand all']";
     String collapsAll= "//*[@title='Collapse all']";
-    String checkAllCheckBoxes= "//span[@class='rct-checkbox']";
+    String checkAllCheckBoxes= "//li[@class='rct-node rct-node-leaf']//span[@class='rct-title']";
+    String listCheckAllCheckbox ="//*[@class='rct-node rct-node-parent rct-node-expanded']";
     String DesktopCheckbox= "//span[@class='rct-title' and text()='Desktop']";
     String NotesCheckboxTab= "//span[@class='rct-title' and text()='Notes']";
 
@@ -89,7 +90,6 @@ public class Elements {
     a.moveToElement(we).click().build().perform();
 
 
-
        // driver.findElement(By.xpath(submitButton)).click();
         Thread.sleep(5000);
         System.out.println("Text box functionality working fine");
@@ -102,32 +102,47 @@ public class Elements {
         System.out.println("clicked on element tab");
         driver.findElement(By.xpath(checkBoxTab)).click();
         System.out.println("Clicked on Checkbox tab");
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         driver.findElement(By.xpath(expandAll)).click();
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         driver.findElement(By.xpath(collapsAll)).click();
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         driver.findElement(By.xpath(expandAll)).click();
-        driver.findElement(By.xpath(DesktopCheckbox)).click();
-        Thread.sleep(5000);
-        driver.findElement(By.xpath(DesktopCheckbox)).click();
-        Thread.sleep(5000);
-        driver.findElement(By.xpath(NotesCheckboxTab)).click();
-        Thread.sleep(5000);
+//        driver.findElement(By.xpath(DesktopCheckbox)).click();
+//        Thread.sleep(5000);
+//        driver.findElement(By.xpath(DesktopCheckbox)).click();
+//        Thread.sleep(5000);
+//        driver.findElement(By.xpath(NotesCheckboxTab)).click();
+//        Thread.sleep(5000);
 
 
 
-        List<WebElement> list = driver.findElements(By.xpath(checkAllCheckBoxes));
+        List<WebElement> list = driver.findElements(By.xpath(listCheckAllCheckbox));
 
-        for (int i = 0; i < list.size() - 1; i++) {
-            if (list.get(i).getText().equals("Desktop")) {
+        for (WebElement str:list) {
+            if(str.getText().equalsIgnoreCase("Notes"))
+            {
+                System.out.println("Inside if"+str.getText());
+                str.click();
+            }
+
+
+        }
+
+
+     /*   for (int i = 0; i <= list.size() - 1; i++) {
+            System.out.println(list.get(i).getText());
+
+            if (list.get(i).getText().equalsIgnoreCase("Notes")) {
+                System.out.println("inside ");
                 list.get(i).click();
                 Thread.sleep(5000);
-                System.out.println("inside ");
+                System.out.println("outside ");
+
                 break;
             }
 
-        }
+        }*/
     }
             @Test
             public void test () throws InterruptedException {
