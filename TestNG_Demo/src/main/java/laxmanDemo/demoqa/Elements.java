@@ -15,6 +15,23 @@ import java.util.List;
 
 public class Elements {
 
+    public static WebDriver driver;
+    /*public void openBrowser() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+    }*/
+    @Test
+    public void openurl() {
+        driver.get("https://demoqa.com/");
+    }
+    @Test
+    public void closeBrowser() {
+        driver.quit();
+    }
+
+
+
     String elementsTab = "div.card.mt-4.top-card:nth-child(1)";
     String innerElementsTab = "div.element-group:nth-child(1)";
     //div[@class='element-group']//span[@class='pr-1'])[1]
@@ -42,41 +59,6 @@ public class Elements {
     String currentAddressTextArea = "//textarea[@id='currentAddress']";
     String permanentAddressTextArea = "//textarea[@id='permanentAddress']";
     String submitButton= "//button[@id='submit']";
-
-
-    String checkBoxTab= "//span[text()='Check Box' and @class='text']";
-    String expandAll= "//*[@title='Expand all']";
-    String collapsAll= "//*[@title='Collapse all']";
-    String checkAllCheckBoxes = "//li[@class='rct-node rct-node-leaf']//span[@class='rct-title']";
-    String checkAllCheckBoxes1 ="//span[@class='rct-title']";
-
-    String listCheckAllCheckbox ="//*[@class='rct-node rct-node-parent rct-node-expanded']";
-    String DesktopCheckbox= "//span[@class='rct-title' and text()='Desktop']";
-    String NotesCheckboxTab= "//span[@class='rct-title' and text()='Notes']";
-
-
-
-
-
-
-
-
-    public static WebDriver driver;
-    /*public void openBrowser() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-
-
-    }*/
-    @Test
-    public void closeBrowser() {
-        driver.quit();
-    }
-    @Test
-    public void openurl() {
-        driver.get("https://demoqa.com/");
-    }
     @Test
     public void textBoxTabFunctionality() throws InterruptedException {
         driver.findElement(By.cssSelector(elementsTab)).click();
@@ -87,22 +69,26 @@ public class Elements {
         driver.findElement(By.xpath(permanentAddressTextArea)).sendKeys("Laxman Waghmare permanent address");
         Actions a = new Actions(driver);
         WebElement we =  driver.findElement(By.xpath(submitButton));
-
-
-    a.moveToElement(we).click().build().perform();
-
-
-       // driver.findElement(By.xpath(submitButton)).click();
+        a.moveToElement(we).click().build().perform();
+        // driver.findElement(By.xpath(submitButton)).click();
         Thread.sleep(5000);
         System.out.println("Text box functionality working fine");
-
-
     }
+
+    String checkBoxTab= "//span[text()='Check Box' and @class='text']";
+    String expandAll= "//*[@title='Expand all']";
+    String collapsAll= "//*[@title='Collapse all']";
+    String checkAllCheckBoxes = "//li[@class='rct-node rct-node-leaf']//span[@class='rct-title']";
+    String checkAllCheckBoxes1 ="//span[@class='rct-title']";
+    String listCheckAllCheckbox ="//*[@class='rct-node rct-node-parent rct-node-expanded']";
+    String DesktopCheckbox= "//span[@class='rct-title' and text()='Desktop']";
+    String NotesCheckboxTab= "//span[@class='rct-title' and text()='Notes']";
+
     @Test
     public void checkboxTabFunctionality() throws InterruptedException {
         driver.findElement(By.cssSelector(elementsTab)).click();
         System.out.println("clicked on element tab");
-        driver.findElement(By.xpath(checkBoxTab)).click();
+        driver.findElement(By.xpath(checkboxTab)).click();
         System.out.println("Clicked on Checkbox tab");
         Thread.sleep(2000);
         driver.findElement(By.xpath(expandAll)).click();
@@ -117,15 +103,13 @@ public class Elements {
 //        driver.findElement(By.xpath(NotesCheckboxTab)).click();
 //        Thread.sleep(5000);
 
-
-
         List<WebElement> list = driver.findElements(By.xpath(checkAllCheckBoxes1));
 
-        for (WebElement str:list) {
-            if(str.getText().equalsIgnoreCase("Notes"))
-            {
-                System.out.println("Inside if"+str.getText());
+        for (WebElement str : list) {
+            if (str.getText().equalsIgnoreCase("Notes")) {
+                System.out.println("Inside if" + str.getText());
                 str.click();
+                Thread.sleep(5000);
 
             }
 
@@ -146,7 +130,72 @@ public class Elements {
             }
 
         }*/
+
     }
+
+        String yesRadioButton="//label[@for='yesRadio']";
+        String impressiveRadioButton="//label[@for='impressiveRadio']";
+        String NoRadioButton="//label[@for='noRadio']";
+
+        @Test
+        public void radioButtonFunctionality() throws InterruptedException {
+            driver.findElement(By.cssSelector(elementsTab)).click();
+            driver.findElement(By.xpath(radioButtonTab)).click();
+            driver.findElement(By.xpath(yesRadioButton)).click();
+            Thread.sleep(2000);
+            driver.findElement(By.xpath(impressiveRadioButton)).click();
+            Thread.sleep(2000);
+
+        }
+
+
+        String addButton="#addNewRecordButton";
+        String firstNameTextBox="#firstName";
+        String lastNameTextBox="#lastName";
+        String emailWebTablesTextBox="#userEmail";
+        String ageTextBox="#age";
+        String salaryTextBox="#salary";
+        String departmentTextBox="#department";
+        String webTableSubmitButton="#submit";
+        String editWebTableButton="//div[@class='ReactTable -striped -highlight']//*[text()='Laxman@gmail.lcl']/following-sibling::div/div//span[@title='Edit']";
+        String deleteWebTableButton="//div[@class='ReactTable -striped -highlight']//*[text()='Laxman@gmail.lcl']/following-sibling::div/div//span[@title='Delete']";
+
+        @Test
+        public void webTablesFunctionality() throws InterruptedException {
+            driver.findElement(By.cssSelector(elementsTab)).click();
+            driver.findElement(By.xpath(webTablesTab)).click();
+            driver.findElement(By.cssSelector(addButton)).click();
+            Thread.sleep(2000);
+            driver.findElement(By.cssSelector(firstNameTextBox)).sendKeys("Laxman");
+            Thread.sleep(2000);
+            driver.findElement(By.cssSelector(lastNameTextBox)).sendKeys("Waghmare");
+            Thread.sleep(2000);
+            driver.findElement(By.cssSelector(emailWebTablesTextBox)).sendKeys("Laxman@gmail.lcl");
+            Thread.sleep(2000);
+            driver.findElement(By.cssSelector(ageTextBox)).sendKeys("36");
+            Thread.sleep(2000);
+            driver.findElement(By.cssSelector(salaryTextBox)).sendKeys("2000");
+            Thread.sleep(2000);
+            driver.findElement(By.cssSelector(departmentTextBox)).sendKeys("QA");
+            Thread.sleep(2000);
+            driver.findElement(By.cssSelector(webTableSubmitButton)).click();
+            Thread.sleep(2000);
+
+            driver.findElement(By.xpath(editWebTableButton)).click();
+            Thread.sleep(2000);
+            driver.findElement(By.cssSelector(salaryTextBox)).clear();
+            Thread.sleep(2000);
+            driver.findElement(By.cssSelector(salaryTextBox)).sendKeys("3000");
+            Thread.sleep(2000);
+            driver.findElement(By.cssSelector(webTableSubmitButton)).click();
+            Thread.sleep(2000);
+
+            driver.findElement(By.xpath(deleteWebTableButton)).click();
+            Thread.sleep(2000);
+
+        }
+
+
             @Test
             public void test () throws InterruptedException {
                 Elements el = new Elements();
@@ -158,7 +207,10 @@ public class Elements {
                 // el.openBrowser();
                 el.openurl();
                 //el.textBoxTabFunctionality();
-                el.checkboxTabFunctionality();
+                //el.checkboxTabFunctionality();
+                //el.radioButtonFunctionality();
+                el.webTablesFunctionality();
+
                 el.closeBrowser();
             }
 
