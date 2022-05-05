@@ -1,17 +1,20 @@
 package laxmanDemo.demoqa;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.hc.core5.util.Asserts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.AbstractList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class Elements {
 
@@ -50,7 +53,7 @@ public class Elements {
     String buttonsTab ="//span[text()='Buttons']";
     String linkTab ="//span[text()='Links']";
     String brokenlinkTab ="//span[text()='Broken Links - Images']";
-    String uploadAndDownloadTab ="//span[text()='Upload and Download']";
+    String uploadAndDownloadTab ="//span[@class='text' and text()='Upload and Download']";
     String dynamicPropertiesTab ="//span[text()='Dynamic Properties']";
 
 
@@ -196,7 +199,123 @@ public class Elements {
         }
 
 
-            @Test
+        String doubleClickButton = "#doubleClickBtn";
+        String rightClickButton = "##rightClickBtn";
+        String clickMeButton = "//button[text()='Click Me']";
+        @Test
+        public void buttonTabFunctionality() throws InterruptedException {
+
+            driver.findElement(By.cssSelector(elementsTab)).click();
+            driver.findElement(By.xpath(buttonsTab)).click();
+            Thread.sleep(2000);
+
+            WebElement we = driver.findElement(By.cssSelector(doubleClickButton));
+            Actions a = new Actions(driver);
+            a.moveToElement(we).doubleClick().build().perform();
+
+
+            WebElement we1 = driver.findElement(By.cssSelector(rightClickButton));
+            Actions a1 = new Actions(driver);
+            a.moveToElement(we).contextClick().build().perform();
+            Thread.sleep(2000);
+
+            driver.findElement(By.xpath(clickMeButton)).click();
+        }
+
+
+
+
+
+    String homelink = "#simpleLink";
+    String homeDynamicLink = "#dynamicLink";
+    String createdLink = "#created";
+    @Test
+    public void linkTabFunctionality() throws InterruptedException {
+
+        driver.findElement(By.cssSelector(elementsTab)).click();
+        driver.findElement(By.xpath(linkTab)).click();
+        Thread.sleep(2000);
+        String originalwindow = driver.getWindowHandle();
+
+
+        driver.findElement(By.cssSelector(homelink)).click();
+        Thread.sleep(2000);
+        driver.switchTo().window(originalwindow);
+
+
+
+
+        driver.findElement(By.cssSelector(homeDynamicLink)).click();
+        Thread.sleep(2000);
+        driver.switchTo().window(originalwindow);
+        driver.findElement(By.cssSelector(createdLink)).click();
+        Thread.sleep(2000);
+
+    }
+
+
+
+
+    String validImage = "//img[@src='/images/Toolsqa.jpg']";
+    String invalidImage = "//p[text()='Broken image']";
+    String validLink = "//a[@href='http://demoqa.com']";
+    String brokenLink = "//a[text()='Click Here for Broken Link']";
+
+    @Test
+    public void brokenlinkImagesTabFunctionality() throws InterruptedException {
+
+        driver.findElement(By.cssSelector(elementsTab)).click();
+        driver.findElement(By.xpath(brokenlinkTab)).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath(validImage)).click();
+        System.out.println("Valid Image");
+
+// Xpath Not Found
+//    driver.findElement(By.xpath(invalidImage)).isDisplayed();
+//       System.out.println("Invalid Image");
+
+        Thread.sleep(2000);
+        //String originalwindow = driver.getWindowHandle();
+        driver.findElement(By.xpath(validLink)).click();
+        //driver.switchTo().window(originalwindow);
+        Thread.sleep(2000);
+        System.out.println("Valid Link");
+        driver.findElement(By.cssSelector(elementsTab)).click();
+        driver.findElement(By.xpath(brokenlinkTab)).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath(brokenLink)).click();
+        Thread.sleep(2000);
+
+    }
+
+    String choosefilebutton = "//input[@id='uploadFile']";
+    String downloadfilebutton = "//input[@id='downloadButton']";
+
+    @Test
+    public void uploadAndDownloadTabFunctionality() throws InterruptedException {
+
+        driver.findElement(By.cssSelector(elementsTab)).click();
+        Thread.sleep(5000);
+        String url = driver.getCurrentUrl();
+        driver.get(url);
+        Thread.sleep(3000);
+        driver.findElement(By.xpath(uploadAndDownloadTab)).click();
+        Thread.sleep(2000);
+        /*driver.findElement(By.xpath(choosefilebutton)).click();
+        System.out.println("Click on Choosefile button");*/
+        System.out.println("Click on Choosefile button");
+        Thread.sleep(2000);
+        WebElement chooseFile = driver.findElement(By.xpath(choosefilebutton));
+
+        chooseFile.click();
+        chooseFile.sendKeys("\\Users\\lwaghmare\\Downloads\\Test.txt");
+        Thread.sleep(2000);
+        driver.findElement(By.xpath(downloadfilebutton)).click();
+        System.out.println("Click on download file");
+    }
+
+
+    @Test
             public void test () throws InterruptedException {
                 Elements el = new Elements();
                 WebDriverManager.chromedriver().setup();
@@ -209,9 +328,13 @@ public class Elements {
                 //el.textBoxTabFunctionality();
                 //el.checkboxTabFunctionality();
                 //el.radioButtonFunctionality();
-                el.webTablesFunctionality();
+                //el.webTablesFunctionality();
+                //el.buttonTabFunctionality();
+                //el.linkTabFunctionality();
+                //el.brokenlinkImagesTabFunctionality();
+                el.uploadAndDownloadTabFunctionality();
 
-                el.closeBrowser();
+                //el.closeBrowser();
             }
 
 
