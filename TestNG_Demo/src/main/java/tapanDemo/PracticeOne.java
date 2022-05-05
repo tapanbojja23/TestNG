@@ -20,7 +20,7 @@ public class PracticeOne {
           openUrl();
     }
 
-    @Test(priority = 0)
+    @Test
     public static void openUrl(){
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
@@ -38,15 +38,12 @@ public class PracticeOne {
         js.executeScript("//div[@class='card mt-4 top-card']//div[@class=\"card-body\"]//h5[contains(text(),'Alerts, Frame & Windows')]).click()");
 
 */
+        // code to click on 'Alerts, Frame & Windows'
         Actions action = new Actions(driver);
         action.moveToElement(driver.findElement(By.xpath("//div[@class='card mt-4 top-card']//div[@class=\"card-body\"]//h5[contains(text(),'Alerts, Frame & Windows')]"))).click().build().perform();
        // action.moveToElement(driver.findElement(By.xpath("//div[@class='card mt-4 top-card']//div[@class=\"card-body\"]//h5[contains(text(),'Interactions')]"))).click().build().perform();
 
-
-
         System.out.println("Clicking Alerts Div");
-
-
 
     } // End of openUrl
 
