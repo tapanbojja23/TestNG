@@ -17,7 +17,7 @@ public class PracticeOne {
     public static WebDriver driver;
 
     public static void main(String[] args) {
-          openUrl();
+        openUrl();
     }
 
     @Test
@@ -36,8 +36,8 @@ public class PracticeOne {
         /*
         JavascriptExecutor js = (JavascriptExecutor)driver;
         js.executeScript("//div[@class='card mt-4 top-card']//div[@class=\"card-body\"]//h5[contains(text(),'Alerts, Frame & Windows')]).click()");
+        */
 
-*/
         // code to click on 'Alerts, Frame & Windows'
         Actions action = new Actions(driver);
         action.moveToElement(driver.findElement(By.xpath("//div[@class='card mt-4 top-card']//div[@class=\"card-body\"]//h5[contains(text(),'Alerts, Frame & Windows')]"))).click().build().perform();
