@@ -68,5 +68,5 @@ public class TapanClassOne {
             System.out.println("In methodTen");
         }
 
-    }
+}
 
