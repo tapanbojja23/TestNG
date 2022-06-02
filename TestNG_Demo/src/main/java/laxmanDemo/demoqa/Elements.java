@@ -1,6 +1,7 @@
 package laxmanDemo.demoqa;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import okhttp3.HttpUrl;
 import org.apache.hc.core5.util.Asserts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import javax.net.ssl.HttpsURLConnection;
+import java.io.IOException;
+import java.net.URL;
 import java.util.AbstractList;
 import java.util.Iterator;
 import java.util.List;
@@ -107,6 +111,8 @@ public class Elements {
 //        Thread.sleep(5000);
 
         List<WebElement> list = driver.findElements(By.xpath(checkAllCheckBoxes1));
+
+
 
         for (WebElement str : list) {
             if (str.getText().equalsIgnoreCase("Notes")) {
@@ -262,7 +268,7 @@ public class Elements {
     String brokenLink = "//a[text()='Click Here for Broken Link']";
 
     @Test
-    public void brokenlinkImagesTabFunctionality() throws InterruptedException {
+    public void brokenlinkImagesTabFunctionality() throws InterruptedException, IOException {
 
         driver.findElement(By.cssSelector(elementsTab)).click();
         driver.findElement(By.xpath(brokenlinkTab)).click();
@@ -285,6 +291,40 @@ public class Elements {
         Thread.sleep(2000);
         driver.findElement(By.xpath(brokenLink)).click();
         Thread.sleep(2000);
+
+
+
+        // Broken link  actual code
+
+
+        List<WebElement> links = driver.findElements(By.tagName("a"));
+       System.out.println("No of links are "+ links.size());
+        String strurl="";
+        for(int i=0;i<links.size();i++)
+        {
+            WebElement E1= links.get(i);
+            strurl= E1.getAttribute("href");
+
+        }
+
+         URL url = new URL(strurl);
+       // HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+       HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
+        con.connect();
+        if (con.getResponseCode() >= 400) {
+            System.out.println("Broken");
+
+        } else {
+            System.out.println(con.getResponseMessage());
+
+        }
+
+
+
+
+
+
+
 
     }
 
